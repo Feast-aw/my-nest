@@ -13,16 +13,7 @@
 // 例如，在 DTO 类中使用 @Type() 装饰器可以指定属性的类型，以便在转换过程中正确地处理嵌套对象或数组。
 
 import { Type } from 'class-transformer';
-import {
-  IsString,
-  IsInt,
-  IsEmail,
-  Min,
-  Max,
-  IsOptional,
-  ValidateNested,
-  IsDefined,
-} from 'class-validator';
+import { IsString, IsInt, IsEmail, Min, Max, IsOptional, ValidateNested } from 'class-validator';
 class ProfileDto {
   @IsString()
   bio: string;
@@ -40,13 +31,16 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @IsDefined() // 这个装饰器表示这个属性必须传，在创建用户时必须提供这个字段
+  // @IsDefined() // 这个装饰器表示这个属性必须传，在创建用户时必须提供这个字段
   @ValidateNested() // 这个装饰器告诉 class-validator 验证这个属性时也要验证它的子属性
   @Type(() => ProfileDto) // 这个装饰器告诉 class-transformer 在转换时把这个属性转换为 ProfileDto 类的实例
   profile: ProfileDto;
 }
 
 export class updeteUserDto {
+  @IsInt()
+  id: number;
+
   @IsString()
   @IsOptional() // 这个装饰器表示这个属性是可选的，在更新用户时可以不提供这个字段
   name: string;
