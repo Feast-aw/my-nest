@@ -9,17 +9,4 @@ export class AppService {
   getHello(): string {
     return 'Hello World!';
   }
-  getUser(id: string): string {
-    console.log(id);
-    return 'User';
-  }
-  cereateUser(): string {
-    return 'Create User';
-  }
-  deteteUser(id: string): string {
-    return 'Delete User with id: ' + id;
-  }
-  updateUser(): string {
-    return 'Update User';
-  }
 }

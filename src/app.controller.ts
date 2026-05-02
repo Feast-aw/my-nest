@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Query, Put, Body } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 //Controller 是 Nest.js 中的一个装饰器，用于定义一个控制器类。
 // 控制器负责处理传入的 HTTP 请求，并返回响应。
@@ -16,21 +16,5 @@ export class AppController {
   @Get(':id')
   getHello(): string {
     return this.appService.getHello();
-  }
-  @Get(':id')
-  getuser(@Param('id') id: string): string {
-    return this.appService.getUser(id);
-  }
-  @Post('')
-  createUser(): string {
-    return this.appService.cereateUser();
-  }
-  @Delete()
-  deleteUser(@Query('id') id: string): string {
-    return this.appService.deteteUser(id);
-  }
-  @Put()
-  updateUser(): string {
-    return this.appService.updateUser();
   }
 }
