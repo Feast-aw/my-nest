@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 import { User } from './entities/user.entity';
-import { CreateUserDto, updeteUserDto } from './dto/create-user.dto';
+import { CreateUserDto, updeteUserDto } from './dto/user-request.dot';
 import { UserResponseDto } from './dto/user-response.dto';
 //InjectRepository 是 TypeORM 提供的一个装饰器，
 // 用于在 Nest.js 中注入一个特定实体的 Repository。

@@ -5,11 +5,8 @@ export class UserResponseDto {
   id: number;
 
   @Expose()
-  name: string;
+  username: string;
 
   @Expose()
-  email: string;
-
-  @Expose()
-  age: number;
+  createdAt: Date;
 }

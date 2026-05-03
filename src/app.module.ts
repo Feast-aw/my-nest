@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { AppController } from './app.controller';
 // import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { TodosModule } from './todos/todos.module';
 //@Module 是 Nest.js 中的一个装饰器，用于定义一个模块类。模块是 Nest.js 中的一个重要概念，
 // 它用于组织代码和提供依赖注入的上下文。通过使用 @Module() 装饰器，你可以指定这个模块包含
 // 哪些控制器、提供哪些服务，以及导入哪些其他模块。在这个例子中，
@@ -20,6 +22,8 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     UsersModule,
+    AuthModule,
+    TodosModule,
     TypeOrmModule.forRoot({
       type: 'mysql', // 数据库类型
       host: 'localhost', // 数据库主机地址

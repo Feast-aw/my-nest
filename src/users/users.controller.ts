@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Delete, Param, Query, Put, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './entities/user.entity';
-import { CreateUserDto, updeteUserDto } from './dto/create-user.dto';
+import { CreateUserDto, updeteUserDto } from './dto/user-request.dot';
 import { UserResponseDto } from './dto/user-response.dto';
 @Controller('users')
 export class UsersController {
@@ -11,7 +10,7 @@ export class UsersController {
     return this.users.getUser(id);
   }
   @Post()
-  createUser(@Body() CreateUserDto: CreateUserDto): Promise<Omit<User, 'createdAt' | 'updatedAt'>> {
+  createUser(@Body() CreateUserDto: CreateUserDto): Promise<UserResponseDto> {
     return this.users.cereateUser(CreateUserDto);
   }
   @Delete()
@@ -20,7 +19,7 @@ export class UsersController {
     return this.users.deteteUser(id);
   }
   @Put()
-  updateUser(@Body() updeteUserDto: updeteUserDto): Promise<updeteUserDto> {
+  updateUser(@Body() updeteUserDto: updeteUserDto): Promise<UserResponseDto> {
     return this.users.updateUser(updeteUserDto);
   }
   @Get()
