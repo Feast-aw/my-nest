@@ -7,6 +7,7 @@ import { plainToInstance } from 'class-transformer';
 import { User } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { UserResponseDto } from '../users/dto/user-response.dto';
+import { JwtService } from '@nestjs/jwt';
 //HttpException 是 NestJS 提供的一个内置异常类，用于在应用程序中抛出 HTTP 错误。
 // 当你需要返回一个特定的 HTTP 状态码和错误消息时，可以使用 HttpException 来实现。
 // 它接受两个参数：错误消息和 HTTP 状态码。
@@ -16,7 +17,8 @@ import { UserResponseDto } from '../users/dto/user-response.dto';
 export class AuthService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    private jwtService: JwtService
   ) {}
   //注册功能
   async register(registerDto: RegisterDto): Promise<UserResponseDto> {
@@ -41,7 +43,7 @@ export class AuthService {
   }
 
   // 登录功能
-  async login(registerDto: RegisterDto): Promise<UserResponseDto> {
+  async login(registerDto: RegisterDto): Promise<{ access_token: string; user: UserResponseDto }> {
     const { username, password } = registerDto;
     const user = await this.userRepository.findOneBy({ username });
     if (!user) {
@@ -51,6 +53,13 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
     }
-    return plainToInstance(UserResponseDto, user, { excludeExtraneousValues: true });
+    // 生成 JWT token
+    const payload = { sub: user.id, username: user.username };
+    const token = this.jwtService.sign(payload);
+    const userDto = plainToInstance(UserResponseDto, user, { excludeExtraneousValues: true });
+    return {
+      access_token: token,
+      user: userDto,
+    };
   }
 }
